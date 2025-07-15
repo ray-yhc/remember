@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>문장 암기 화면</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
   <style>
-    /* iOS 스타일 토글 스위치 */
     .switch {
       position: relative;
       display: inline-block;
@@ -46,7 +51,6 @@
       transform: translateX(22px);
     }
 
-    /* 선택 효과: display 영역에만 */
     body.light #display::selection {
       background: #000;
       color: #000;
@@ -57,52 +61,49 @@
       color: #000;
     }
   </style>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'  // ✅ 이 줄을 꼭 추가해야 class 기반 dark: 스타일이 적용됨
-    }
-  </script>
 </head>
 <body class="light bg-white text-gray-800 transition-colors duration-300">
 
-<div class="max-w-2xl mx-auto p-6">
-  <h1 class="text-2xl font-bold mb-4">문장 암기</h1>
+  <div class="max-w-2xl mx-auto px-4 py-6">
+    <h1 class="text-xl sm:text-2xl font-bold mb-4 text-center">문장 암기</h1>
 
-  <textarea id="inputText" placeholder="암기할 문장을 입력하세요..."
-            class="w-full p-4 border border-gray-300 rounded-lg shadow-sm text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600"></textarea>
+    <textarea id="inputText"
+      placeholder="암기할 문장을 입력하세요..."
+      class="w-full p-3 border border-gray-300 rounded-xl shadow-sm text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-600"
+      rows="5"></textarea>
 
-  <div class="flex items-center justify-between mt-4">
-    <button onclick="submitText()"
-            class="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md">
-      Submit
-    </button>
+    <div class="flex flex-wrap items-center justify-between mt-4 gap-4">
+      <button onclick="submitText()"
+        class="px-6 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-all shadow-md text-sm sm:text-base">
+        Submit
+      </button>
 
-    <div class="flex items-center space-x-3">
-      <label class="switch">
-        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
-        <span class="slider"></span>
-      </label>
-      <span class="text-sm">Light / Dark</span>
+      <div class="flex items-center gap-2">
+        <label class="switch">
+          <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+          <span class="slider"></span>
+        </label>
+        <span class="text-sm sm:text-base">Light / Dark</span>
+      </div>
+    </div>
+
+    <div id="display"
+      class="mt-6 p-4 border border-gray-300 rounded-xl min-h-[100px] bg-white text-gray-900 dark:bg-black dark:text-black dark:border-gray-600 transition-all duration-300 whitespace-pre-wrap select-text text-sm sm:text-base overflow-x-auto">
     </div>
   </div>
 
-  <div id="display"
-       class="mt-6 p-5 border border-gray-300 rounded-lg min-h-[100px] bg-white text-gray-900 dark:bg-black dark:text-black dark:border-gray-600 transition-all duration-300 whitespace-pre-wrap select-text">
-  </div>
-</div>
+  <script>
+    function submitText() {
+      const text = document.getElementById('inputText').value;
+      document.getElementById('display').textContent = text;
+    }
 
-<script>
-  function submitText() {
-    const text = document.getElementById('inputText').value;
-    document.getElementById('display').textContent = text;
-  }
-
-  function toggleTheme() {
-    const body = document.body;
-    body.classList.toggle('dark');
-    body.classList.toggle('light');
-  }
-</script>
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle('dark');
+      body.classList.toggle('light');
+    }
+  </script>
 
 </body>
 </html>
